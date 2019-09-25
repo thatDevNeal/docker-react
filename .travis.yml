@@ -14,3 +14,19 @@ before_install:
 # use -e CI=true, CI will make it run once.
 script:
   - docker run -e CI=true nbharucha/docker-react npm run test
+
+# tells travis ci how to deploy our app
+# Set Environment Variables within travis-ci.org -> settings -> Environment Variables
+deploy:
+  provider: elasticbeanstalk
+  region: "us-east-2" # Ohio
+  app: "docker"
+  env: "Docker-env"
+  bucket_name: "elasticbeanstalk-us-east-2-258063334742" # beanstalk generates S3 bucket for you
+  bucket_path: "docker"
+  on:
+    branch: master
+  access_key_id:
+    secure: $AWS_ACCESS_KEY
+  secret_access_key:
+    secure: $AWS_SECRET_KEY
