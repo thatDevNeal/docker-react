@@ -1,0 +1,11 @@
+# .dev so it knows to only run in a dev environment
+FROM node:alpine
+
+WORKDIR '/app'
+
+COPY package.json .
+RUN npm install
+
+COPY . .
+
+CMD ["npm", "run", "start"]
