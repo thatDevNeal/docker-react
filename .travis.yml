@@ -1,0 +1,16 @@
+# language: generic
+# Only need this if build fails with rakefile not found
+sudo: required
+# gives travis superuser level
+services:
+  - docker # Travis CI will automatically install Docker into our running container
+
+# some series of steps before deployment/testing
+before_install:
+  - docker build -t nbharucha/docker-react -f Dockerfile.dev .
+
+# looks at status code/result of npm run test
+# instead of -- --coverage
+# use -e CI=true, CI will make it run once.
+script:
+  - docker run -e CI=true nbharucha/docker-react npm run test
